@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,6 +29,8 @@ public class home extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,11 +68,21 @@ public class home extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+
         if (mListener != null) {
             mListener.onFragmentInteraction(Uri.parse("My Wallet"));
         }
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        ArrayList<Wallet> wallets = new ArrayList<Wallet>();
+
+        wallets.add(new Wallet("0xF52D1060190795f3C396Dc74A79D6F670b95e47F", "Main wallet"));
+        final WalletAdapter walletAdapter = new WalletAdapter(getActivity(),wallets);
+        ListView listView = view.findViewById(R.id.cardList);
+        listView.setAdapter(walletAdapter);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
